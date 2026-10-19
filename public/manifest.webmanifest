@@ -1,0 +1,9 @@
+{
+  "name": "Aurelia Patient Portal",
+  "short_name": "Aurelia",
+  "start_url": "/portal",
+  "display": "standalone",
+  "background_color": "#FAF8F4",
+  "theme_color": "#1E1C1A",
+  "icons": []
+}

@@ -1,0 +1,41 @@
+{
+  "name": "aurelia-os",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Aurelia OS - the operating system for modern aesthetic clinics",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc -b",
+    "smoke": "tsx --tsconfig tsconfig.json scripts/smoke.ts",
+    "smoke:render": "tsx --tsconfig tsconfig.json scripts/render.tsx",
+    "test": "npm run typecheck && npm run smoke && npm run smoke:render",
+    "perf:node": "tsx --tsconfig tsconfig.json scripts/perf-node.ts",
+    "perf:browser": "node scripts/perf-browser.mjs",
+    "perf:trace": "node scripts/perf-trace.mjs"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "framer-motion": "^11.11.17",
+    "immer": "^10.1.1",
+    "lucide-react": "^0.460.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.28.0",
+    "zustand": "^5.0.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.20",
+    "playwright": "^1.48.2",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.15",
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.11"
+  }
+}

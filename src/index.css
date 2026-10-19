@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ivory: #FAF8F4;
+  --ink: #1E1C1A;
+  color-scheme: light;
+}
+
+@layer base {
+  html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
+  body { @apply bg-ivory text-ink font-sans; font-feature-settings: 'cv11', 'ss01'; }
+  ::selection { background: #EBDCCB; color: #1E1C1A; }
+  :focus-visible { outline: 2px solid #A8642A; outline-offset: 2px; border-radius: 6px; }
+  button { -webkit-tap-highlight-color: transparent; }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { scrollbar-width: none; }
+  .text-balance { text-wrap: balance; }
+  .grain { position: relative; }
+  .grain::after {
+    /* no mix-blend-mode: blending forces the whole section into an expensive separate composite on scroll */
+    content: ''; position: absolute; inset: 0; pointer-events: none; opacity: .035;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .hairline { box-shadow: inset 0 0 0 1px rgba(30, 28, 26, .06); }
+}
+
+* { scrollbar-width: thin; scrollbar-color: #D3CBBF transparent; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: #D3CBBF; border-radius: 10px; border: 3px solid transparent; background-clip: content-box; }
+
+/* Scroll reveal (see <Reveal>): compositor-driven transition, toggled once by a shared observer. */
+.reveal { opacity: 0; transform: translate3d(0, var(--reveal-y, 24px), 0); transition: opacity .9s cubic-bezier(.22, 1, .36, 1), transform .9s cubic-bezier(.22, 1, .36, 1); }
+.reveal.is-in { opacity: 1; transform: none; }
+
+/* Infinite loops as CSS keyframes (compositor) — a JS-driven loop restyles every frame forever. */
+@keyframes scroll-cue { 0%, 100% { transform: scaleY(.3); } 50% { transform: scaleY(1); } }
+.scroll-cue { transform-origin: top; animation: scroll-cue 2.4s ease-in-out infinite; }
+
+/* Hero parallax as a scroll-driven animation: runs on the compositor, no scroll listeners.
+   Browsers without support simply show a static hero. */
+@keyframes hero-img-drift { to { transform: translate3d(0, 18%, 0); } }
+@keyframes hero-text-drift { to { transform: translate3d(0, 30%, 0); opacity: 0; } }
+@supports (animation-timeline: scroll()) {
+  .hero-parallax-img { animation: hero-img-drift linear both; animation-timeline: scroll(root); animation-range: 0 100vh; }
+  .hero-parallax-text { animation: hero-text-drift linear both; animation-timeline: scroll(root); animation-range: 0 70vh; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-parallax-img, .hero-parallax-text { animation: none !important; }
+  .reveal { opacity: 1; transform: none; }
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
